@@ -1,55 +1,45 @@
-var Emitter = require('events')
+module.exports = fetchSpreadsheet
+
 var request = require('simple-get').concat
 var queue = require('queue')
-var fs = require('fs')
 
+var fetching = false
+var cbs = []
 var objects = null
-try {
-  objects = JSON.parse(fs.readFileSync(__dirname + '/cache.json'))
-} catch (err) {
-  objects = {}
-}
 
-module.exports = new Emitter()
-module.exports.objects = objects
-module.exports.fetch = getSheets
-getSheets()
-
-function getSheets () {
-  var url = `https://spreadsheets.google.com/feeds/worksheets/${process.env.GOOGLE_SHEET}/public/full?alt=json`
+function fetchSpreadsheet (docId, _cb) {
+  cbs.push(_cb)
+  if (fetching) return
+  fetching = true
+  var url = `https://spreadsheets.google.com/feeds/worksheets/${docId}/public/full?alt=json`
   request(url, (err, res, body) => {
     if (err || res.statusCode !== 200) {
-      console.error(err.message || body)
+      cb(new Error(err.message || body))
       return
     }
     try {
       body = JSON.parse(body)
     } catch (err) {
-      console.error('failed to list sheets', err)
+      cb(err)
       return
     }
     objects = {}
     var q = queue()
     body.feed.entry.forEach((sheet, i) => {
-      q.push(cb => getSheet(i + 1, sheet.title['$t'], cb))
+      q.push(cb => getSheet(docId, i + 1, sheet.title['$t'], cb))
     })
     q.start(err => {
       if (err) {
-        console.error(err)
+        cb(err)
         return
       }
-      var json = JSON.stringify(objects, null, 2)
-      fs.writeFile(__dirname + '/cache.json', json, err => {
-        if (err) console.error('failed to persist cache')
-      })
-      module.exports.objects = objects
-      module.exports.emit('change')
+      cb(null, objects)
     })
   })
 }
 
-function getSheet (index, sheet, cb) {
-  var url = `https://spreadsheets.google.com/feeds/list/${process.env.GOOGLE_SHEET}/${index}/public/values?alt=json`
+function getSheet (docId, index, sheet, cb) {
+  var url = `https://spreadsheets.google.com/feeds/list/${docId}/${index}/public/values?alt=json`
   request(url, (err, res, body) => {
     if (err || res.statusCode !== 200) {
       cb(err || new Error(body))
@@ -83,5 +73,12 @@ function getSheet (index, sheet, cb) {
       objects[object.id] = object
     })
     cb()
+  })
+}
+
+function cb () {
+  fetching = false
+  cbs.forEach(_cb => {
+    _cb.apply(null, arguments)
   })
 }

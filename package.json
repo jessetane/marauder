@@ -4,7 +4,8 @@
   "description": "Marauder net visualization",
   "scripts": {
     "build": ". ./env.sh && node index.js",
-    "debug": ". ./env.sh && node --inspect --debug-brk index.js"
+    "debug": ". ./env.sh && node --inspect --debug-brk index.js",
+    "start": ". ./env.sh && node ./src/http-server"
   },
   "dependencies": {
     "queue": "^4.2.1",
