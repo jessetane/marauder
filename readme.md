@@ -1,13 +1,15 @@
 # marauder
-Marauder net visualization.
+Marauder net visualization. The database is a Google spreadsheet and can be edited here: https://docs.google.com/spreadsheets/d/1jTyE6Qg1jxwTCrYRHz3FON3dpXysV_TA1ywteBH1VDU
 
 ## Install
 * Run `npm install`
-* Create `env.sh` to configure. The spreadsheet currently used as the database is here:
-https://docs.google.com/spreadsheets/d/1jTyE6Qg1jxwTCrYRHz3FON3dpXysV_TA1ywteBH1VDU
+* Copy `env.sample.sh` to `env.sh` to configure
 
 ## Example
-`npm run build-kml`
+First make some change to the database, then run:
+``` shell
+$ npm run --silent build > marauder.kml`
+```
 
 ## License
 MIT

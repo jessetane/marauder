@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "Marauder net visualization",
   "scripts": {
-    "build-kml": ". ./env.sh && node index.js"
+    "build": ". ./env.sh && node index.js",
+    "debug": ". ./env.sh && node --inspect --debug-brk index.js"
   },
   "dependencies": {
     "queue": "^4.2.1",
     "simple-get": "^2.6.0",
     "strxml": "0.0.0"
   },
+  "repository": "https://github.com/jessetane/marauder",
   "author": "jesse.tane@gmail.com",
   "license": "MIT"
 }
