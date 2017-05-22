@@ -21,15 +21,15 @@ function toGeoJSON (objects) {
         properties: object
       })
     } else if (object.sheet === 'links') {
-      var nodeA = objects[object['node-a']]
-      var nodeB = objects[object['node-b']]
+      var upstream = objects[object['upstream']]
+      var downstream = objects[object['downstream']]
       geoJSON.features.push({
         type: 'Feature',
         geometry: {
           type: 'LineString',
           coordinates: [
-            [ nodeA.lng, nodeA.lat, nodeA.alt ],
-            [ nodeB.lng, nodeB.lat, nodeB.alt ]
+            [ upstream.lng, upstream.lat, upstream.alt ],
+            [ downstream.lng, downstream.lat, downstream.alt ]
           ]
         },
         properties: object
