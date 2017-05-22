@@ -4,8 +4,8 @@ Marauder net visualization. The database is a Google spreadsheet and can be edit
 ## Usage
 * Clone the repo and cd into the directory
 * Run `npm install`
-* Copy `env.sample.sh` to `env.sh` to configure
-* Make some change to the database, then run:
+* Copy `env.sample.sh` to `env.sh` and edit to configure
+* Make some change to the database, then do:
 ``` shell
 $ npm run --silent build > marauder.kml
 ```
