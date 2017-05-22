@@ -70,6 +70,9 @@ function getSheet (docId, index, sheet, cb) {
       if (!object.id) {
         object.id = `${sheet}-${i}`
       }
+      if (!object.name) {
+        object.name = object.id
+      }
       objects[object.id] = object
     })
     cb()
