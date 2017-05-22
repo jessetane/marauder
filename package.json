@@ -1,0 +1,15 @@
+{
+  "name": "marauder",
+  "version": "1.0.0",
+  "description": "Marauder net visualization",
+  "scripts": {
+    "build-kml": ". ./env.sh && node index.js"
+  },
+  "dependencies": {
+    "queue": "^4.2.1",
+    "simple-get": "^2.6.0",
+    "tokml": "^0.4.0"
+  },
+  "author": "jesse.tane@gmail.com",
+  "license": "MIT"
+}
