@@ -38,7 +38,6 @@ function getSheets () {
         console.error(err)
         return
       }
-      console.log('database fetched successfully')
       var json = JSON.stringify(objects, null, 2)
       fs.writeFile(__dirname + '/cache.json', json, err => {
         if (err) console.error('failed to persist cache')

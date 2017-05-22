@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 var db = require('./src/database')
 var toKML = require('./src/to-kml')
 
@@ -39,7 +37,6 @@ db.on('change', () => {
       })
     }
   }
-  // var json = JSON.stringify(geoJSON, null, 2)
   var kml = toKML(geoJSON)
-  console.log(kml)
+  process.stdout.write(kml)
 })
