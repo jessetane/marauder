@@ -1,4 +1,4 @@
-// credit: https://github.com/mapbox/tokml
+// hacked from: https://github.com/mapbox/tokml
 
 var strxml = require('strxml'),
     tag = strxml.tag,
