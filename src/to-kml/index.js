@@ -107,40 +107,61 @@ function timestamp(_, options) {
 // https://developers.google.com/kml/documentation/kmlreference#geometry
 var geometry = {
     Point: function(_) {
-        return tag('Point', tag('coordinates', _.coordinates.join(',')));
+        return tag('Point', [
+            tag('altitudeMode', 'relativeToGround'),
+            tag('coordinates', _.coordinates.join(','))
+        ]);
     },
     LineString: function(_) {
-        return tag('LineString', tag('coordinates', linearring(_.coordinates)));
+        return tag('LineString', [
+            tag('altitudeMode', 'relativeToGround'),
+            tag('coordinates', linearring(_.coordinates))
+        ]);
     },
     Polygon: function(_) {
         if (!_.coordinates.length) return '';
         var outer = _.coordinates[0],
             inner = _.coordinates.slice(1),
             outerRing = tag('outerBoundaryIs',
-                tag('LinearRing', tag('coordinates', linearring(outer)))),
+                tag('LinearRing', [
+                    tag('altitudeMode', 'relativeToGround'),
+                    tag('coordinates', linearring(outer))
+                ])),
             innerRings = inner.map(function(i) {
                 return tag('innerBoundaryIs',
-                    tag('LinearRing', tag('coordinates', linearring(i))));
+                    tag('LinearRing', [
+                        tag('altitudeMode', 'relativeToGround'),
+                        tag('coordinates', linearring(i))
+                    ]));
             }).join('');
         return tag('Polygon', outerRing + innerRings);
     },
     MultiPoint: function(_) {
         if (!_.coordinates.length) return '';
-        return tag('MultiGeometry', _.coordinates.map(function(c) {
-            return geometry.Point({ coordinates: c });
-        }).join(''));
+        return tag('MultiGeometry', [
+            tag('altitudeMode', 'relativeToGround'),
+            _.coordinates.map(function(c) {
+                return geometry.Point({ coordinates: c });
+            }).join('')
+        ]);
     },
     MultiPolygon: function(_) {
         if (!_.coordinates.length) return '';
-        return tag('MultiGeometry', _.coordinates.map(function(c) {
-            return geometry.Polygon({ coordinates: c });
-        }).join(''));
+        return tag('MultiGeometry', [
+            tag('altitudeMode', 'relativeToGround'),
+            _.coordinates.map(function(c) {
+                return geometry.Polygon({ coordinates: c });
+            }).join('')
+        ]);
     },
     MultiLineString: function(_) {
         if (!_.coordinates.length) return '';
-        return tag('MultiGeometry', _.coordinates.map(function(c) {
-            return geometry.LineString({ coordinates: c });
-        }).join(''));
+        return tag('MultiGeometry', [
+            tag('altitudeMode', 'relativeToGround'),
+            _.coordinates.map(function(c) {
+                return geometry.LineString({ coordinates: c });
+            }).join('')
+        ]);
     },
     GeometryCollection: function(_) {
         return tag('MultiGeometry',
