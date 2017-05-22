@@ -8,7 +8,7 @@ Marauder net visualization. The database is a Google spreadsheet and can be edit
 ## Example
 First make some change to the database, then run:
 ``` shell
-$ npm run --silent build > marauder.kml`
+$ npm run --silent build > marauder.kml
 ```
 
 ## License
