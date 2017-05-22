@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var db = require('./src/database')
-var toKML = require('tokml')
+var toKML = require('./src/to-kml')
 
 db.on('change', () => {
   var geoJSON = {
