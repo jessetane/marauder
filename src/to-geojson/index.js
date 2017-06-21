@@ -32,7 +32,10 @@ function toGeoJSON (objects) {
             [ downstream.lng, downstream.lat, downstream.alt ]
           ]
         },
-        properties: object
+        properties: Object.assign(object, {
+          fill: '#000000',
+          'fill-opacity': 0.35
+        })
       })
     }
   }
