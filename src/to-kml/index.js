@@ -11,7 +11,7 @@ module.exports = function tokml(geojson, options) {
         documentDescription: undefined,
         name: 'name',
         description: 'description',
-        simplestyle: false,
+        simplestyle: true,
         timestamp: 'timestamp'
     };
 
