@@ -35,7 +35,7 @@ function toGeoJSON (objects) {
         properties: Object.assign(object, {
           stroke: '#FFFFFF',
           fill: '#000000',
-          'fill-opacity': 0.4
+          'fill-opacity': 0.5
         })
       })
     }
