@@ -2,15 +2,14 @@ module.exports = fetchSpreadsheet
 
 var request = require('simple-get').concat
 var queue = require('queue')
+var parseUrl = require('url').parse
 
-var fetching = false
 var cbs = []
 var objects = null
 
 function fetchSpreadsheet (docId, _cb) {
   cbs.push(_cb)
-  if (fetching) return
-  fetching = true
+  if (cbs.length > 1) return
   var url = `https://spreadsheets.google.com/feeds/worksheets/${docId}/public/full?alt=json`
   request(url, (err, res, body) => {
     if (err || res.statusCode !== 200) {
@@ -80,8 +79,9 @@ function getSheet (docId, index, sheet, cb) {
 }
 
 function cb () {
-  fetching = false
-  cbs.forEach(_cb => {
+  var _cbs = cbs
+  cbs = []
+  _cbs.forEach(_cb => {
     _cb.apply(null, arguments)
   })
 }
