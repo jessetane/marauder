@@ -11,6 +11,8 @@ server.on('request', (req, res) => {
       res.statusCode = 500
       return res.end(err.message)
     }
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET')
     res.end(toKML(toGeoJSON(objects)))
   })
 })
